@@ -2,9 +2,9 @@
 import tensorflow as tf
 
 # Stop processing after the model hits a 99% accuracy rating.
-class myCallback(tf.keras.callbacks.Callback):
-  def on_epoch_end(self, epoch, logs={}):
-    if(logs.get('accuracy')>0.99):
+class myCallback(tf.keras.callbacks.Callback):                      # Class created to handle the end of an Epoch
+  def on_epoch_end(self, epoch, logs={}):                           # Takes in self, epoch, and logs
+    if(logs.get('accuracy')>0.99):                                  # Accuracy is found within the logs input
       print("\nReached 99% accuracy so cancelling training!")
       self.model.stop_training = True
 
@@ -27,8 +27,8 @@ x_train = x_train/255.0
 x_test = x_test/255.0
 
 # Define the model
-model = tf.keras.models.Sequential([ tf.keras.layers.Flatten(),                                 # Flatten to 1D array
-                                     tf.keras.layers.Dense(128, activation= tf.nn.relu),        # Find all possible results > 0
+model = tf.keras.models.Sequential([ tf.keras.layers.Flatten(input_shape = (28, 28)),           # Flatten to 1D array from 28x28 image
+                                     tf.keras.layers.Dense(512, activation= tf.nn.relu),        # Find all possible results > 0, within 512 calculations
                                      tf.keras.layers.Dense(10, activation= tf.nn.softmax)])     # Narrow down to 0-9
 
 # Compile with the loss and optimizer functions
